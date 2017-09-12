@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>react</title>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <div id="box"></div>
+    <script type="text/babel">
+//      ReactDOM.render(
+//        <h1>Hello, world!</h1>,
+//        document.getElementById('example')
+//      );
+let list = ['Annie','Mc_CoCo','ban'];
+const con = [
+    <h1 key="1">hello world</h1>,
+    <h1 key="2">大保健</h1>
+];
+let Template = React.createClass({
+    getDefaultProps: function(){
+        return {
+            name: 'pomy',
+            git: 'dwqs',
+            score:[1,2,3]
+        }
+    },
+    propTypes: {
+        name: React.PropTypes.string.isRequired,
+    },
+    //组件挂载之前
+    getInitialState : function(){
+        console.log("组件挂载.... 之前 getInitialState");
+        return {
+            "api" : "没有"
+        }
+    },
+
+    //初始化渲染之后
+    componentDidMount : function(){
+        console.log("init 渲染 之后 componentDidMount");
+        this.loadData();
+    },
+
+    //初始化渲染之前
+    componentWillMount : function(){
+        console.log("init 渲染 之前 componentWillMount")
+    },
+
+
+    //在组件接收到新的 props 的时候调用
+    componentWillReceiveProps : function(){
+        console.log("componentWillReceiveProps...");
+    },
+
+    //在接收到新的 props 或者 state，将要渲染之前调用
+    shouldComponentUpdate : function(){
+        console.log("shouldComponentUpdate...");
+
+        return true;
+    },
+
+    //在接收到新的 props 或者 state 之前立刻调用
+    componentWillUpdate : function(){
+        console.log("componentWillUpdate...");
+    },
+
+    //在组件的更新已经同步到 DOM 中之后立刻被调用
+    componentDidUpdate : function(){
+        console.log("componentDidUpdate...")
+    },
+    //组件移除
+    componentWillUnmount : function(){
+        console.log("remove component...")
+    },
+    loadData:function () {
+      console.log('获取到数据了！');
+        this.setState({
+            api: [{code:'1'},{code:'2'}]
+        });
+//        this.state({
+//            api:[{code:'1'},{code:'2'}]
+//        })
+    },
+    unmountLifeCycle:function (e) {
+        console.log(e);
+        //React.unmountComponentAtNode(document.getElementById('box'));
+    },
+    handleClick:function (e) {
+        this.refs.myTextInput.focus();
+        console.log(e.target.value);
+        console.log(this.refs.myTextInput.value);//获取虚拟dom内的value值
+    },
+    render :function () {
+        return <div>
+                  <h1 onClick={this.unmountLifeCycle}>我是{this.props.name}</h1>
+                  <input type="text" ref="myTextInput" />
+                  <input type="button" value="Focus the text input" onClick={this.handleClick} />
+                </div>
+    }
+});
+let data = [{title: 'Hello'}];
+// <h1>{con}</h1>
+      let Hello = ReactDOM.render(
+              <div>{
+                  list.map(function(v,k){
+                      return <h1 key={k}>{v}</h1>
+                  })
+              }
+                <Template />
+              </div>,
+          document.getElementById('box')
+      );
+    </script>
+  </body>
+</html>

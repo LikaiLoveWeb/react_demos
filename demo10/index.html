@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.2.0/jquery.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      var Hello = React.createClass({
+        getInitialState: function () {
+          return {
+            opacity: 1.0,
+              btn :true
+          };
+        },
+        componentDidMount: function () {
+          this.timer = setInterval(function () {
+            var opacity = this.state.opacity;
+            var btn = this.state.btn;
+            if(btn){
+                opacity -= .05;
+            }else if(!btn){
+                opacity += .05;
+            }
+
+            if (opacity < 0.1&&btn) {
+                btn = false
+            }else if(!btn&&opacity>=1){
+                btn = true
+            }
+            console.log(btn);
+            this.setState({
+              opacity: opacity,
+                btn:btn
+            });
+          }.bind(this), 100);
+        },
+          componentDidUpdate:function () {
+            console.log(this.state.opacity)
+          },
+        render: function () {
+          return (
+            <div style={{opacity: this.state.opacity}}>
+              Hello {this.props.name}
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <Hello name="world"/>,
+        document.getElementById('example')
+      );
+
+    </script>
+  </body>
+</html>
